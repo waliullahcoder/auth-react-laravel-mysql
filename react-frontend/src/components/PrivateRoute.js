@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 const PrivateRoute = ({ children, isAdmin = false }) => {
   const { token, isSuperAdmin } = useSelector((state) => state.auth);
-  console.log("privateroute",token,isSuperAdmin);
+
   if (!token) {
     return <Navigate to="/login" />;
   }

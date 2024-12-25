@@ -6,7 +6,7 @@ const PublicRoute = ({ children }) => {
   const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    console.log("PublicRoute - token:", token); // Check if token is being set
+    console.log('PublicRoute - token:', token); // Log token to check if it’s being set correctly
   }, [token]);
 
   if (token) {

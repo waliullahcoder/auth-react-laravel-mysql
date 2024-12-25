@@ -1,10 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { login } from '../store';
+import { login } from '../store'; // Import login action from store
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,12 +18,28 @@ const Login = () => {
         email,
         password,
       });
+
+      const { access_token, is_superadmin } = response.data;
+
+      // Save token in localStorage to persist login
+      localStorage.setItem('token', access_token);
+
+      // Dispatch the token and user role info to Redux store
       dispatch(
         login({
-          token: response.data.access_token,
-          isSuperAdmin: response.data.is_superadmin === 1,
+          token: access_token,
+          isSuperAdmin: is_superadmin === 1, // Assuming 1 represents super admin
         })
       );
+
+      // Redirect to the dashboard
+      if (is_superadmin === 1) {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
+
+      
     } catch (error) {
       alert('Login failed. Please check your credentials.');
     }

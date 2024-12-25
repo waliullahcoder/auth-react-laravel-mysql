@@ -33,7 +33,7 @@ const Logout = () => {
 
         // Clear the Redux state
         dispatch(logout());
-
+        localStorage.removeItem('token');
         // Redirect to login
         navigate('/login');
       } catch (error) {
@@ -48,6 +48,7 @@ const Logout = () => {
     handleLogout(); // Trigger the logout process
   }, [token, dispatch, navigate]);
 
+  
   return (
     <div>
       <h2>Logging Out...</h2>
